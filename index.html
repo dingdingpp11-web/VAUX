@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VAUX — Human-Computer Interaction Innovation</title>
+<meta name="description" content="VAUX is a consumer AI interaction technology company building a human-computer interaction platform for the next generation of computing.">
+<style>
+:root{--bg:#050505;--fg:#f5f5f2;--muted:#969696;--line:#242424;--blue:#4d7cff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;letter-spacing:-.02em}a{color:inherit;text-decoration:none}button{font:inherit}
+.nav{position:fixed;z-index:20;top:0;left:0;right:0;height:72px;padding:0 5vw;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#050505 30%,transparent);backdrop-filter:blur(8px)}
+.logo{font-size:22px;font-weight:750;letter-spacing:-.05em}.navlinks{display:flex;gap:28px;font-size:13px;color:#bbb}.navlinks a:hover{color:#fff}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:130px 8vw 80px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:60vw;height:60vw;border-radius:50%;right:-25vw;top:10vh;background:radial-gradient(circle,rgba(77,124,255,.14),transparent 62%);pointer-events:none}
+.kicker{font-size:13px;color:var(--blue);margin-bottom:28px;font-weight:650;text-transform:uppercase;letter-spacing:.12em}.hero h1{font-size:clamp(58px,9vw,140px);line-height:.88;max-width:1050px;margin:0;font-weight:650;letter-spacing:-.07em}.hero p{font-size:clamp(19px,2.1vw,28px);line-height:1.25;max-width:720px;color:#b8b8b8;margin:42px 0}.actions{display:flex;gap:12px;flex-wrap:wrap}.btn{border:1px solid #383838;border-radius:999px;padding:13px 20px;font-size:14px;background:#111;color:#fff;cursor:pointer}.btn.primary{background:#f4f4f0;color:#070707;border-color:#f4f4f0}.btn:hover{transform:translateY(-1px)}
+section{padding:120px 8vw;border-top:1px solid var(--line)}.sectionhead{display:flex;justify-content:space-between;gap:30px;margin-bottom:55px}.eyebrow{font-size:12px;color:var(--blue);letter-spacing:.12em;text-transform:uppercase}.sectiontitle{font-size:clamp(38px,5vw,76px);line-height:.95;margin:10px 0 0;letter-spacing:-.06em}.intro{max-width:470px;color:#999;font-size:18px;line-height:1.45}
+.demo{border:1px solid #292929;border-radius:28px;min-height:520px;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(65,90,150,.2),transparent 30%),#090909;display:flex;align-items:center;justify-content:center}.orb{width:250px;height:250px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,rgba(100,150,255,.8) 12%,rgba(35,55,110,.25) 45%,transparent 70%);filter:blur(.3px);box-shadow:0 0 90px rgba(77,124,255,.35);animation:float 5s ease-in-out infinite}.demo span{position:absolute;bottom:22px;left:24px;color:#777;font-size:12px}.demo .live{top:22px;right:24px;bottom:auto;color:#aaa}.live i{display:inline-block;width:7px;height:7px;background:#55d17a;border-radius:50%;margin-right:7px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{min-height:330px;border:1px solid var(--line);border-radius:22px;padding:26px;display:flex;flex-direction:column;justify-content:space-between;background:#080808;transition:.25s}.card:hover{border-color:#454545;transform:translateY(-4px)}.visual{height:185px;border-radius:15px;background:radial-gradient(circle at 50% 50%,rgba(100,120,255,.35),transparent 45%),linear-gradient(135deg,#0b0b0b,#151515);position:relative;overflow:hidden}.visual:after{content:"";position:absolute;inset:25%;border:1px solid rgba(255,255,255,.2);border-radius:50%;box-shadow:0 0 70px rgba(100,130,255,.25)}.card h3{font-size:22px;margin:18px 0 4px}.meta{font-size:12px;color:#777}.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{border:1px solid var(--line);border-radius:24px;padding:42px;min-height:330px}.panel h3{font-size:30px;margin:0 0 18px}.panel p{color:#999;line-height:1.55}.list{margin-top:35px;display:grid;gap:11px;color:#ccc;font-size:14px}.list div{padding-top:11px;border-top:1px solid #202020}.ecosystem{font-size:clamp(30px,5vw,68px);line-height:1.1;letter-spacing:-.055em;max-width:950px}.ecosystem .blue{color:var(--blue)}.arrow{color:#444;padding:12px 0;font-size:25px}.cta{padding-bottom:150px}.footer{padding:30px 8vw 45px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:#666;font-size:12px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;z-index:40;padding:25px}.modal.open{display:flex}.modalbox{width:min(850px,100%);background:#0b0b0b;border:1px solid #333;border-radius:24px;padding:28px}.modalbox video{width:100%;border-radius:16px;background:#000;max-height:65vh}.close{float:right;border:0;background:none;color:#aaa;font-size:24px;cursor:pointer}
+@keyframes float{50%{transform:translateY(-18px) scale(1.03)}}@media(max-width:800px){.navlinks{display:none}.hero{padding-left:6vw;padding-right:6vw}.hero h1{font-size:58px}.sectionhead,.split{grid-template-columns:1fr;display:grid}section{padding:85px 6vw}.cards{grid-template-columns:1fr}.panel{padding:28px}.demo{min-height:390px}.orb{width:180px;height:180px}}
+</style>
+</head>
+<body>
+<nav class="nav"><a class="logo" href="#">VAUX</a><div class="navlinks"><a href="#explore">Explore</a><a href="#create">Create</a><a href="#developers">Developers</a><a href="#creators">Creators</a><a href="#gesture">Gesture</a></div><a class="btn" href="#create">Start Creating</a></nav>
+
+<header class="hero">
+<div class="kicker">Human-Computer Interaction Innovation</div>
+<h1>Beyond<br>Touch.</h1>
+<p>VAUX is a consumer AI interaction technology company building a human-computer interaction platform for the next generation of computing.</p>
+<div class="actions"><button class="btn primary" id="tryBtn">Try Live Demo</button><a class="btn" href="#explore">Explore Interfaces</a></div>
+</header>
+
+<section id="explore">
+<div class="sectionhead"><div><div class="eyebrow">01 / Explore</div><h2 class="sectiontitle">Made with<br>VAUX.</h2></div><p class="intro">Discover interactive experiences created by creators and developers. Play them. Remix them. Make them your own.</p></div>
+<div class="demo"><div class="orb"></div><span>Interactive preview · Gesture / Motion</span><span class="live"><i></i>Live experience</span></div>
+<div style="height:28px"></div><div class="cards">
+<article class="card"><div class="visual"></div><div><h3>Particle Flow</h3><div class="meta">Gesture × Generative Art · Try / Remix</div></div></article>
+<article class="card"><div class="visual"></div><div><h3>Motion Game</h3><div class="meta">Gesture × Gaming · Try / Remix</div></div></article>
+<article class="card"><div class="visual"></div><div><h3>Fluid Motion</h3><div class="meta">Creative Coding · Try / Remix</div></div></article>
+</div>
+</section>
+
+<section id="create">
+<div class="sectionhead"><div><div class="eyebrow">02 / Create</div><h2 class="sectiontitle">Create the<br>impossible.</h2></div><p class="intro">Start with a visual template or build with AI. VAUX is designed to meet creators where they already create.</p></div>
+<div class="split"><div class="panel"><h3>Start in VAUX</h3><p>Customize interactive templates directly in the browser. Tune movement, visuals and actions, then record and share.</p><div class="list"><div>Choose a template</div><div>Customize the interaction</div><div>Record & share</div></div></div><div class="panel"><h3>Build with AI</h3><p>Use Codex, Cursor or Claude Code with the VAUX SDK. Build outside the platform, then publish your interactive experience back to VAUX.</p><div class="list"><div>VAUX SDK + examples</div><div>GitHub-based workflow</div><div>Publish · Remix · Earn</div></div></div></div>
+</section>
+
+<section id="developers">
+<div class="sectionhead"><div><div class="eyebrow">03 / Developers</div><h2 class="sectiontitle">A new layer<br>for interaction.</h2></div><p class="intro">One interaction layer designed to connect new input modalities with digital experiences.</p></div>
+<div class="ecosystem">Gesture SDK<br><span class="blue">→</span><br>Web · AI · Games · Creative Tools<br><span class="blue">→</span><br>New Human Interfaces</div>
+</section>
+
+<section id="creators">
+<div class="sectionhead"><div><div class="eyebrow">04 / Creators</div><h2 class="sectiontitle">Create.<br>Share.<br>Earn.</h2></div><p class="intro">Your work should travel beyond the platform. Publish interactive experiences, make shareable videos, grow an audience and build a creative business.</p></div>
+<div class="split"><div class="panel"><h3>Built for distribution</h3><p>Vertical-first previews, direct links, attribution and remixable projects turn every interaction into social content.</p></div><div class="panel"><h3>Built for ownership</h3><p>Creators keep their identity and projects. Future marketplace features can connect interactive work with paid templates, collaborations and commercial licensing.</p></div></div>
+</section>
+
+<section id="gesture">
+<div class="sectionhead"><div><div class="eyebrow">05 / Gesture Wearable</div><h2 class="sectiontitle">The interface<br>moves with you.</h2></div><p class="intro">VAUX Gesture explores EMG and motion sensing as a natural input layer for AI, creative tools, gaming and wearable computing.</p></div>
+<div class="demo" style="min-height:430px"><div class="orb" style="width:190px;height:190px"></div><span>VAUX Gesture · Wearable interaction</span></div>
+</section>
+
+<section class="cta">
+<div class="eyebrow">VAUX Ecosystem</div><h2 class="sectiontitle" style="max-width:900px">Human-Computer Interaction Innovation</h2>
+<div class="arrow">↓</div><div style="font-size:22px">Interface Lab — Create · Develop · Share · Remix</div>
+<div class="arrow">↓</div><div style="font-size:22px">Gesture Wearable — Real-world interaction</div>
+<div class="arrow">↓</div><div style="font-size:22px">Creators · Developers · Users</div>
+<div class="arrow">↓</div><div style="font-size:22px">The next interaction ecosystem.</div>
+</section>
+<footer class="footer"><span>© 2026 VAUX</span><span>Human-Computer Interaction Innovation</span></footer>
+
+<div class="modal" id="modal"><div class="modalbox"><button class="close" id="close">×</button><div class="eyebrow">Webcam Gesture Demo</div><h2 style="font-size:36px;margin:8px 0 20px">Try interaction in your browser.</h2><video id="video" autoplay playsinline muted></video><p style="color:#888;font-size:13px">Camera access is requested only after you press Start Camera. This prototype demonstrates the interaction entry point; full VAUX gesture sensing will be added with the SDK and wearable.</p><button class="btn primary" id="camera">Start Camera</button></div></div>
+<script>
+const modal=document.getElementById('modal'),video=document.getElementById('video');
+document.getElementById('tryBtn').onclick=()=>modal.classList.add('open');
+document.getElementById('close').onclick=()=>{modal.classList.remove('open');if(video.srcObject)video.srcObject.getTracks().forEach(t=>t.stop());video.srcObject=null};
+document.getElementById('camera').onclick=async()=>{try{video.srcObject=await navigator.mediaDevices.getUserMedia({video:true,audio:false})}catch(e){alert('Camera access was not granted. You can still explore the platform without a camera.')}};
+</script>
+</body></html>
