@@ -69,10 +69,17 @@ section{padding:120px 8vw;border-top:1px solid var(--line)}.sectionhead{display:
 <footer class="footer"><span>© 2026 VAUX</span><span>Human-Computer Interaction Innovation</span></footer>
 
 <div class="modal" id="modal"><div class="modalbox"><button class="close" id="close">×</button><div class="eyebrow">Webcam Gesture Demo</div><h2 style="font-size:36px;margin:8px 0 20px">Try interaction in your browser.</h2><video id="video" autoplay playsinline muted></video><p style="color:#888;font-size:13px">Camera access is requested only after you press Start Camera. This prototype demonstrates the interaction entry point; full VAUX gesture sensing will be added with the SDK and wearable.</p><button class="btn primary" id="camera">Start Camera</button></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
 <script>
-const modal=document.getElementById('modal'),video=document.getElementById('video');
+const modal=document.getElementById('modal'),video=document.getElementById('video'),cameraBtn=document.getElementById('camera');
+let camera=null,canvas=null,ctx=null,running=false;
+function setupCanvas(){if(canvas)return;canvas=document.createElement('canvas');canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:16px;transform:scaleX(-1);pointer-events:none';video.parentElement.style.position='relative';video.parentElement.appendChild(canvas);ctx=canvas.getContext('2d')}
+function onResults(results){setupCanvas();canvas.width=video.videoWidth||1280;canvas.height=video.videoHeight||720;ctx.clearRect(0,0,canvas.width,canvas.height);if(results.multiHandLandmarks&&results.multiHandLandmarks.length){const lm=results.multiHandLandmarks[0];drawConnectors(ctx,lm,HAND_CONNECTIONS,{color:'#4d7cff',lineWidth:4});drawLandmarks(ctx,lm,{color:'#fff',lineWidth:1,radius:4});const index=lm[8],thumb=lm[4],x=(1-index.x)*canvas.width,y=index.y*canvas.height,d=Math.hypot(index.x-thumb.x,index.y-thumb.y),orb=document.querySelector('.modal .orb');if(orb){const s=Math.max(.75,Math.min(1.65,1.65-d*4));orb.style.transform='translate('+(x-canvas.width/2)*.18+'px,'+(y-canvas.height/2)*.18+'px) scale('+s+')';orb.style.transition='transform .08s linear'}}}
+function startTracking(){if(running)return;running=true;setupCanvas();const hands=new Hands({locateFile:(file)=>'https://cdn.jsdelivr.net/npm/@mediapipe/hands/'+file});hands.setOptions({maxNumHands:1,modelComplexity:1,minDetectionConfidence:.65,minTrackingConfidence:.65});hands.onResults(onResults);camera=new Camera(video,{onFrame:async()=>{await hands.send({image:video})},width:1280,height:720});camera.start();cameraBtn.textContent='Camera Active';cameraBtn.disabled=true}
 document.getElementById('tryBtn').onclick=()=>modal.classList.add('open');
-document.getElementById('close').onclick=()=>{modal.classList.remove('open');if(video.srcObject)video.srcObject.getTracks().forEach(t=>t.stop());video.srcObject=null};
-document.getElementById('camera').onclick=async()=>{try{video.srcObject=await navigator.mediaDevices.getUserMedia({video:true,audio:false})}catch(e){alert('Camera access was not granted. You can still explore the platform without a camera.')}};
+document.getElementById('close').onclick=()=>{modal.classList.remove('open');if(camera)camera.stop();if(video.srcObject)video.srcObject.getTracks().forEach(t=>t.stop());running=false;camera=null;cameraBtn.disabled=false;cameraBtn.textContent='Start Camera'};
+cameraBtn.onclick=async()=>{try{if(!navigator.mediaDevices?.getUserMedia)throw new Error('unsupported');video.srcObject=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});video.onloadedmetadata=startTracking}catch(e){alert('Camera access was not granted. Please allow camera access in your browser and try again.')}};
 </script>
 </body></html>
